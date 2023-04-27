@@ -58,16 +58,16 @@ class PersonajesService{
     update = async (Personaje) => {
         let rowsAffected = 0;
         console.log('Personajeservice.update');
-
+//error con el varchar
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
                 .input('pImagen', sql.varchar(500) , Personaje?.imagen ?? '')
                 .input('pNombre', sql.varchar(50)  , Personaje?.nombre ?? '')
-                .input('pEdad'    , sql.Int , Personaje?.edad ?? 5)
-                .input('pPeso', sql.Float , Personaje?.peso ?? 5)
+                .input('pEdad'    , sql.Int , Personaje?.edad ?? 0)
+                .input('pPeso', sql.Float , Personaje?.peso ?? 0)
                 .imput('pHistoria', sql.varchar(500), Personaje?.historia ?? '')
-                .input('pId'         , sql.Int   , Personaje?.Id ?? 1)
+                .input('pId'         , sql.Int   , Personaje?.Id ?? 0)
                 .query(`UPDATE Personaje SET Imagen = @pImagen, Nombre = @pNombre, Edad = @pEdad, Peso = @pPeso, Historia = @pHistoria, Id = @pId`);
             rowsAffected = result.rowsAffected;
         } catch (error) {

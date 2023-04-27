@@ -17,6 +17,26 @@ async function getbyid(){
     console.log(data)
     console.log(data2)
 }
-
-await getAll()
-await getbyid()
+async function deleteById(){
+    let svc = new PersonajesService();
+    let data = await svc.deleteById(3)
+    console.log(data);
+}
+async function UPDATE(){
+    let svc = new PersonajesService();
+    let data;
+    let Personaje;
+    Personaje = await svc.getById(4)
+    if(Personaje != null){
+        Personaje.Edad = 2;
+        data = await svc.update(Personaje)
+        console.log(data)
+    }else{
+        console.log('peronsaje');
+        console.log(Personaje);
+    }
+}
+//await getAll()
+//await getbyid()
+//await deleteById();
+await UPDATE();
