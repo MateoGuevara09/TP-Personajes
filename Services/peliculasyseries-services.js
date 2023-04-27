@@ -2,24 +2,26 @@ import config from "../dbconfig.js";
 import sql from 'mssql'
 
 class peliculasyseriesservices{
-    getAll = async() => {
-        let returnArray = null
-        console.log('peliculasyseriesservices.getall')
-        try{
-            let pool = await sql.connect(config);
-            console.log(pool)
-            let result = await pool.request().query("SELECT * from PeliculasYseries")
-            console.log(result)
-            returnArray = result.recordesets[0]
+    getAll = async () => {
+        let returnArray = null;
+        console.log('***********get all de peliculas *********');
+
+        try {
+            let pool   = await sql.connect(config);
+            let result = await pool.request().query("SELECT * from PeliculasYseries");
+            returnArray = result.recordsets[0];
         }
-        catch(error) {
-            console.log(error)
+
+        catch (error) {
+            console.log(error);
         }
-        return returnArray
+
+        return returnArray;
+
     }
     getById = async (id) => {
         let returnEntity = null;
-        console.log('peliculasyseriesservices.getbyid');
+        console.log('Estoy en: PizzaService.getById(id)');
         try {
             let pool   = await sql.connect(config);
             let result = await pool.request()
@@ -31,5 +33,6 @@ class peliculasyseriesservices{
         }
         return returnEntity;
     }
+
 }
 export default peliculasyseriesservices

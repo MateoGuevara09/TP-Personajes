@@ -13,11 +13,10 @@ async function getbyid(){
     let svc = new PersonajesService();
     let data = await svc.getById(1);
     let svc2 = new peliculasyseriesservices();
-    console.log(svc2)
-    let data2 =  await svc2.getByid(1);
+    let data2 =  await svc2.getById(1);
     console.log(data)
     console.log(data2)
 }
 
 await getAll()
-// await getbyid()
+await getbyid()
