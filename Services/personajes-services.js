@@ -2,6 +2,8 @@ import config from "../dbconfig.js";
 import sql from 'mssql'
 
 class PersonajesService{
+    //getall
+
     getAll = async () => {
 
         let returnArray = null;
@@ -27,6 +29,7 @@ class PersonajesService{
         return returnArray;
     
     }
+    //getbyid
     getById = async (id) => {
         let returnEntity = null;
         console.log('Personajeservice.getbyid');
@@ -41,6 +44,7 @@ class PersonajesService{
         }
         return returnEntity;
     }
+    //deletebyid
     deleteById = async (id) => {
         let rowsAffected = 0;
         console.log('Personajeservice.deleteById');
@@ -55,20 +59,21 @@ class PersonajesService{
         }
         return rowsAffected;
     }
+    //update!!!
     update = async (Personaje) => {
         let rowsAffected = 0;
         console.log('Personajeservice.update');
-//error con el varchar
         try {
+            var edad = 2
             let pool = await sql.connect(config);
             let result = await pool.request()
-                .input('pImagen', sql.varchar(500) , Personaje?.imagen ?? '')
-                .input('pNombre', sql.varchar(50)  , Personaje?.nombre ?? '')
-                .input('pEdad'    , sql.Int , Personaje?.edad ?? 0)
+                .input('pImagen', sql.NVarChar(500) , Personaje?.Imagen ?? '')
+                .input('pNombre', sql.NVarChar(50)  , Personaje?.Nombre ?? '')
+                .input('pEdad'    , sql.Int , edad ?? 0)
                 .input('pPeso', sql.Float , Personaje?.peso ?? 0)
-                .imput('pHistoria', sql.varchar(500), Personaje?.historia ?? '')
-                .input('pId'         , sql.Int   , Personaje?.Id ?? 0)
-                .query(`UPDATE Personaje SET Imagen = @pImagen, Nombre = @pNombre, Edad = @pEdad, Peso = @pPeso, Historia = @pHistoria, Id = @pId`);
+                .input('pHistoria', sql.NVarChar(500), Personaje?.historia ?? '')
+                .input('pId'         , sql.Int   , Personaje?.ID ?? 0)
+                .query(`UPDATE Personajes SET Imagen = @pImagen, Nombre = @pNombre, Edad = @pEdad, Peso = @pPeso, Historia = @pHistoria WHERE Id = @pId`);
             rowsAffected = result.rowsAffected;
         } catch (error) {
             console.log(error);

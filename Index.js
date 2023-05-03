@@ -26,9 +26,8 @@ async function UPDATE(){
     let svc = new PersonajesService();
     let data;
     let Personaje;
-    Personaje = await svc.getById(4)
+    Personaje = await svc.getById(3)
     if(Personaje != null){
-        Personaje.Edad = 2;
         data = await svc.update(Personaje)
         console.log(data)
     }else{
