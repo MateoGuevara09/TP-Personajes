@@ -17,12 +17,12 @@ async function getbyid(){
     console.log(data)
     console.log(data2)
 }
-async function deleteById(){
+async function deleteByIdPersonaje(){
     let svc = new PersonajesService();
     let data = await svc.deleteById(3)
     console.log(data);
 }
-async function UPDATE(){
+async function UPDATEPersonaje(){
     let svc = new PersonajesService();
     let data;
     let Personaje;
@@ -35,7 +35,22 @@ async function UPDATE(){
         console.log(Personaje);
     }
 }
-//await getAll()
-//await getbyid()
-//await deleteById();
-await UPDATE();
+async function deleteByIdPelicula(){
+    let svc = new peliculasyseriesservices();
+    let data = await svc.deleteById(7)
+    console.log(data);
+}
+async function updatePelicula(){
+    let svc = new peliculasyseriesservices();
+    let data;
+    let peliculasyseries;
+    peliculasyseries = await svc.getById(8)
+    if(peliculasyseries != null){
+        data = await svc.update(peliculasyseries)
+        console.log(data)
+    }else{
+        console.log('pelilculo');
+        console.log(peliculasyseries);
+    } 
+}
+await updatePelicula();

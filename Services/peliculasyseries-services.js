@@ -2,6 +2,7 @@ import config from "../dbconfig.js";
 import sql from 'mssql'
 
 class peliculasyseriesservices {
+    //getAll
     getAll = async () => {
         let returnArray = null;
         console.log('***********get all de peliculas *********');
@@ -19,6 +20,7 @@ class peliculasyseriesservices {
         return returnArray;
 
     }
+    //getById
     getById = async (id) => {
         let returnEntity = null;
         console.log('Estoy en: PizzaService.getById(id)');
@@ -33,6 +35,7 @@ class peliculasyseriesservices {
         }
         return returnEntity;
     }
+    //delete
     deleteById = async (id) => {
         let rowsAffected = 0;
         console.log('peliculasyseriesservices.deleteById');
@@ -48,19 +51,18 @@ class peliculasyseriesservices {
         return rowsAffected;
     }
     //update!!!
-    update = async (Personaje) => {
+    update = async (PeliYSerie) => {
         let rowsAffected = 0;
         console.log('peliculasyseriesservices.update');
         try {
+            var FechaCreacionmodif = new Date(1995,11,17);
             let pool = await sql.connect(config);
             let result = await pool.request()
-                .input('pImagen', sql.NVarChar(500), Personaje?.Imagen ?? '')
-                .input('pNombre', sql.NVarChar(50), Personaje?.Nombre ?? '')
-                .input('pEdad', sql.Int, edad ?? 0)
-                .input('pPeso', sql.Float, Personaje?.peso ?? 0)
-                .input('pHistoria', sql.NVarChar(500), Personaje?.historia ?? '')
-                .input('pId', sql.Int, Personaje?.ID ?? 0)
-                .query(`UPDATE Personajes SET Imagen = @pImagen, Nombre = @pNombre, Edad = @pEdad, Peso = @pPeso, Historia = @pHistoria WHERE Id = @pId`);
+                .input('pimagen', sql.NVarChar(500), PeliYSerie?.Imagen ?? '')
+                .input('ptitulo', sql.NVarChar(50), PeliYSerie?.Titulo ?? '')
+                .input('pfechaDeCreacion', sql.Date, PeliYSerie?.FechaCreacion ?? null)
+                .input('pcalificacion', sql.Int, PeliYSerie?.Calificacion ?? 0)
+                .query(`UPDATE PeliculasYseries SET imagen = @pImagen, titulo = @pTitulo, fechaDeCreacion = @pFechaCreacion, calificacion = @pcalificacion WHERE Id = @pId`);
             rowsAffected = result.rowsAffected;
         } catch (error) {
             console.log(error);
