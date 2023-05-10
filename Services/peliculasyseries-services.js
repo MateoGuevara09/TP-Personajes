@@ -55,14 +55,15 @@ class peliculasyseriesservices {
         let rowsAffected = 0;
         console.log('peliculasyseriesservices.update');
         try {
-            var FechaCreacionmodif = new Date(1995,11,17);
+            var titulonuevo = 'tot'
             let pool = await sql.connect(config);
             let result = await pool.request()
                 .input('pimagen', sql.NVarChar(500), PeliYSerie?.Imagen ?? '')
-                .input('ptitulo', sql.NVarChar(50), PeliYSerie?.Titulo ?? '')
-                .input('pfechaDeCreacion', sql.Date, PeliYSerie?.FechaCreacion ?? null)
+                .input('ptitulo', sql.NVarChar(50), titulonuevo ?? '')
+                .input('pfechaDeCreacion', sql.DateTime, PeliYSerie?.fechaDeCreacion ?? "1753-01-01")
                 .input('pcalificacion', sql.Int, PeliYSerie?.Calificacion ?? 0)
-                .query(`UPDATE PeliculasYseries SET imagen = @pImagen, titulo = @pTitulo, fechaDeCreacion = @pFechaCreacion, calificacion = @pcalificacion WHERE Id = @pId`);
+                .input('pId', sql.Int, PeliYSerie?.Id ?? 0)
+                .query(`UPDATE PeliculasYseries SET imagen = @pimagen, titulo = @ptitulo, fechaDeCreacion = @pfechaDeCreacion, calificacion = @pcalificacion WHERE Id = @pId`);
             rowsAffected = result.rowsAffected;
         } catch (error) {
             console.log(error);

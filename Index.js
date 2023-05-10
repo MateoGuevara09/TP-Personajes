@@ -1,5 +1,6 @@
 import PersonajesService from "./Services/personajes-services.js"
 import peliculasyseriesservices from "./Services/peliculasyseries-services.js"
+//import { Express } from "express";
 
 async function getAll(){
     let svc = new PersonajesService();
@@ -44,7 +45,8 @@ async function updatePelicula(){
     let svc = new peliculasyseriesservices();
     let data;
     let peliculasyseries;
-    peliculasyseries = await svc.getById(8)
+    peliculasyseries = await svc.getById(5)
+
     if(peliculasyseries != null){
         data = await svc.update(peliculasyseries)
         console.log(data)
