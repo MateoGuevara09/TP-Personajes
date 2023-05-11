@@ -17,8 +17,12 @@ app.get('/characters',async (req,res) =>{
 //app.get('/characters/:idpelicula'){
  //   const personaje = await svc1.getPersonajePorCaracteristica();
 //}
-app.get('/characters/:id',async (req,res) =>{
-    const personaje = await svc1.getById(req.params.id);
+app.get('/buscarpornombre/:nombre',async (req,res) =>{
+    const personaje = await svc1.getByNombre(req.params.nombre);
+    return res.status(200).json(personaje)
+});
+app.get('/buscarporedad/:edad',async (req,res) =>{
+    const personaje = await svc1.getByedad(req.params.edad);
     return res.status(200).json(personaje)
 });
 //server
