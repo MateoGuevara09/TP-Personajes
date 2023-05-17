@@ -59,6 +59,21 @@ class PersonajesService {
         }
         return returnEntity;
     }
+    //getByIdPelicula
+    getByIdPelicula = async (idpelicula) => {
+        let returnEntity = null;
+        console.log('Personajeservice.getByIdPelicula');
+        try {
+            let pool = await sql.connect(config);
+            let result = await pool.request()
+                .input('pidpelicula', sql.Int, idpelicula)
+                .query('SELECT peliculapersonaje.id, Personajes.nombre, Personajes.imagen, Personajes.edad, Personajes.peso, Personajes.historia, PeliculasYseries.titulo FROM peliculapersonaje JOIN Personajes ON peliculapersonaje.fkPersonaje=Personajes.ID JOIN PeliculasYseries ON peliculapersonaje.fkPelicula=PeliculasYseries.Id where PeliculasYseries.Id = @pidpelicula')
+            returnEntity = result.recordsets[0][0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity;
+    }
     //getByEdad
     getByedad = async (edad) => {
         let returnEntity = null;

@@ -35,6 +35,38 @@ class peliculasyseriesservices {
         }
         return returnEntity;
     }
+    //getIdImagenTituloFecha
+    getIdImagenTituloFecha = async() => {
+        let returnArray = null;
+        console.log('pizzaservicegetIdImagenTituloFecha');
+
+        try {
+            let pool = await sql.connect(config);
+            let result = await pool.request().query("SELECT Id,imagen,titulo,fechaDeCreacion from PeliculasYseries");
+            returnArray = result.recordsets[0];
+        }
+
+        catch (error) {
+            console.log(error);
+        }
+
+        return returnArray;
+    }
+      //getByNombre
+      getByNombre = async (nombre) => {
+        let returnEntity = null;
+        console.log('Personajeservice.getByNombre');
+        try {
+            let pool = await sql.connect(config);
+            let result = await pool.request()
+                .input('pNombre', sql.NVarChar(50), nombre)
+                .query('SELECT peliculapersonaje.id, PeliculasYseries.titulo, PeliculasYseries.imagen,PeliculasYseries.fechaDeCreacion,PeliculasYseries.calificacion, Personajes.nombre, Personajes.imagen, Personajes.edad, Personajes.peso, Personajes.historia FROM peliculapersonaje JOIN Personajes ON peliculapersonaje.fkPersonaje=Personajes.ID JOIN PeliculasYseries ON peliculapersonaje.fkPelicula=PeliculasYseries.Id where PeliculasYseries.titulo = @pNombre')
+            returnEntity = result.recordsets[0][0];
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity;
+    }
     //delete
     deleteById = async (id) => {
         let rowsAffected = 0;
